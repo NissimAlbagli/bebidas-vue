@@ -1,11 +1,14 @@
 import { ref, watch, onMounted } from 'vue';
 import { defineStore } from 'pinia'
-import { useBebidasStore } from './bebidas'; 
+import { useBebidasStore } from './bebidas';
+import { useModalStore } from './modal';
 
 export const useFavoritosStore = defineStore('favoritos', () => {
 
     const bebidas = useBebidasStore();
+    const modal = useModalStore();
     const favoritos = ref([]);
+    
 
     onMounted(() => {
         favoritos.value = JSON.parse(localStorage.getItem('favoritos')) ?? []
@@ -36,10 +39,11 @@ export const useFavoritosStore = defineStore('favoritos', () => {
 
     function handleClickFavorito() {
         if(existeFavorito()) {
-            eliminarFavorito()
+            eliminarFavorito();
         } else {
-            agregarFavorito()
+            agregarFavorito();
         }
+        modal.modal = false;
     }
 
     return {
