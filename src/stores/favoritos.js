@@ -9,6 +9,7 @@ export const useFavoritosStore = defineStore('favoritos', () => {
     const bebidas = useBebidasStore();
     const modal = useModalStore();
     const notificaciones = useNotificacionStore();
+
     const favoritos = ref([]);
     
 
@@ -33,13 +34,16 @@ export const useFavoritosStore = defineStore('favoritos', () => {
 
     function eliminarFavorito() {
         favoritos.value = favoritos.value.filter(favorito => favorito.idDrink !== bebidas.receta.idDrink)
+
+        notificaciones.mostrar = true;
+        notificaciones.texto = 'Eliminado de favoritos';
     }
 
     function agregarFavorito() {
         favoritos.value.push(bebidas.receta);
 
         notificaciones.mostrar = true;
-        notificaciones.texto = 'Se agrego a favoritos'
+        notificaciones.texto = 'Se agrego a favoritos';
     }
 
     function handleClickFavorito() {
